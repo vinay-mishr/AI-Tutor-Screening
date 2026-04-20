@@ -13,13 +13,10 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json({ limit: "2mb" }));
 
-// ✅ CORS FIX (dev + production)
+// ✅ CORS (works both locally & production)
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? true
-        : "http://localhost:3000",
+    origin: true,
     credentials: true,
   })
 );
@@ -31,42 +28,20 @@ const aiLimiter = rateLimit({
   message: { error: "Too many requests. Try again later." },
 });
 
-// 🔥 SYSTEM PROMPT (same as yours)
-const SYSTEM_PROMPT = `You are Aria, a warm and professional AI interviewer for Cuemath — a leading math tutoring platform. You are conducting a screening interview to assess whether a candidate would make a great tutor for children aged 6–16.
+// 🔥 SYSTEM PROMPT
+const SYSTEM_PROMPT = `You are Aria, a warm and professional AI interviewer for Cuemath — a leading math tutoring platform...
 
-Your goal: assess soft skills — not math ability. Specifically:
-1. Communication clarity
-2. Patience and empathy
-3. Ability to simplify concepts
-4. Warmth and child-friendliness
-5. English fluency and articulation
-
-Interview flow:
-- Ask exactly 5 questions total
-- Start with a warm welcome, then ask Q1
-- After each answer: acknowledge briefly (1 sentence max), then ask the next question
-- If an answer is too short or vague (under 10 words), ask a follow-up
-- Keep responses SHORT (2–4 sentences max)
-
-Questions:
-Q1: Tell me about yourself and what draws you to teaching children.
-Q2: Explain a fraction to a 9-year-old.
-Q3: Student stuck for 5 minutes — what do you do?
-Q4: What makes a great math tutor?
-Q5: Tell me about a surprising student moment.
-
-After Q5 → give goodbye + output ASSESSMENT_JSON.`;
+(keep your full prompt here exactly same)`;
 
 // =====================================================
-// ✅ SERVE FRONTEND (PRODUCTION)
+// ✅ ALWAYS SERVE FRONTEND (NO NODE_ENV CHECK)
 // =====================================================
-if (process.env.NODE_ENV === "production") {
-  const buildPath = path.join(process.cwd(), "client/build");
 
-  console.log("Serving static from:", buildPath);
+const buildPath = path.join(process.cwd(), "client/build");
 
-  app.use(express.static(buildPath));
-}
+console.log("Serving static from:", buildPath);
+
+app.use(express.static(buildPath));
 
 // =====================================================
 // ✅ API ROUTES
@@ -89,7 +64,7 @@ app.post("/api/interview", aiLimiter, async (req, res) => {
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: {
@@ -130,17 +105,55 @@ app.post("/api/interview", aiLimiter, async (req, res) => {
 // =====================================================
 // ✅ CATCH-ALL (REACT ROUTING)
 // =====================================================
-if (process.env.NODE_ENV === "production") {
-  const buildPath = path.join(process.cwd(), "client/build");
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(buildPath, "index.html"));
-  });
-}
+app.get("*", (req, res) => {
+  res.sendFile(path.join(buildPath, "index.html"));
+});
 
 // =====================================================
 // ✅ START SERVER
 // =====================================================
+
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const SYSTEM_PROMPT = `You are Aria, a warm and professional AI interviewer for Cuemath — a leading math tutoring platform. You are conducting a screening interview to assess whether a candidate would make a great tutor for children aged 6–16.
+
+// Your goal: assess soft skills — not math ability. Specifically:
+// 1. Communication clarity
+// 2. Patience and empathy
+// 3. Ability to simplify concepts
+// 4. Warmth and child-friendliness
+// 5. English fluency and articulation
+
+// Interview flow:
+// - Ask exactly 5 questions total
+// - Start with a warm welcome, then ask Q1
+// - After each answer: acknowledge briefly (1 sentence max), then ask the next question
+// - If an answer is too short or vague (under 10 words), ask a follow-up
+// - Keep responses SHORT (2–4 sentences max)
+
+// Questions:
+// Q1: Tell me about yourself and what draws you to teaching children.
+// Q2: Explain a fraction to a 9-year-old.
+// Q3: Student stuck for 5 minutes — what do you do?
+// Q4: What makes a great math tutor?
+// Q5: Tell me about a surprising student moment.
+
+// After Q5 → give goodbye + output ASSESSMENT_JSON.`;
