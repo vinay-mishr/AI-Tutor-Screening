@@ -1,0 +1,94 @@
+.wrap {
+  display: flex; flex-direction: column;
+  padding: 1.5rem; max-width: 700px; margin: 0 auto; width: 100%;
+  padding-bottom: 3rem;
+}
+
+.reportHeader {
+  text-align: center; margin-bottom: 2rem; padding: 2rem;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+}
+
+.badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #6366F1, #818CF8);
+  color: white; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 1rem;
+}
+
+.name {
+  font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 0.4rem;
+  background: linear-gradient(135deg, #fff, #818CF8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.meta { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
+
+.overallScore { font-size: 56px; font-weight: 300; color: var(--text); line-height: 1; margin-bottom: 0.75rem; }
+.overallScore span { font-size: 20px; color: var(--muted); }
+
+.verdictBadge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 20px; border-radius: 24px; font-size: 14px; font-weight: 600;
+}
+
+.pass { background: rgba(16,185,129,0.15); color: #10B981; border: 1px solid rgba(16,185,129,0.3); }
+.maybe { background: rgba(245,158,11,0.15); color: #F59E0B; border: 1px solid rgba(245,158,11,0.3); }
+.fail { background: rgba(239,68,68,0.12); color: #EF4444; border: 1px solid rgba(239,68,68,0.3); }
+
+.sectionTitle {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--muted); margin: 1.5rem 0 0.75rem;
+}
+
+.dimGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+@media (max-width: 500px) { .dimGrid { grid-template-columns: 1fr; } }
+
+.dimCard { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.2rem; }
+
+.dimName { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+
+.dimScoreRow { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+
+.dimNum { font-size: 26px; font-weight: 500; color: var(--text); line-height: 1; }
+
+.dimBarTrack { flex: 1; height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+
+.dimBarFill { height: 100%; border-radius: 3px; transition: width 1s ease; }
+
+.dimNote { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+.dimQuote { font-size: 12px; color: var(--muted); font-style: italic; margin-top: 6px; padding-left: 8px; border-left: 2px solid var(--border); line-height: 1.4; }
+
+.summaryBox { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; font-size: 14px; line-height: 1.75; color: var(--text); }
+
+.recBox { border-left: 3px solid var(--accent); }
+
+.transcriptSection { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 1.5rem; }
+
+.transcriptToggle {
+  width: 100%; background: none; border: none; color: var(--text);
+  padding: 1rem 1.2rem; text-align: left; font-size: 14px; font-weight: 500;
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  transition: background 0.15s;
+}
+
+.transcriptToggle:hover { background: var(--card); }
+
+.transcriptBody { padding: 0 1.2rem 1.2rem; max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+
+.tLine { display: flex; gap: 12px; font-size: 13px; line-height: 1.55; }
+
+.tWho { font-weight: 600; min-width: 60px; padding-top: 1px; flex-shrink: 0; }
+.tAi { color: var(--accent2); }
+.tYou { color: var(--green); }
+
+.restartBtn {
+  width: 100%; background: var(--accent); color: white; border: none;
+  border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; margin-top: 1.5rem;
+}
+
+.restartBtn:hover { background: #4F46E5; }
