@@ -4,10 +4,17 @@ services:
     env: node
     region: singapore
     plan: free
-    buildCommand: npm install && npm run build
+
+    # Install backend + frontend deps and build React app
+    buildCommand: npm install && cd client && npm install && npm run build
+
+    # Start backend server
     startCommand: cd server && node index.js
+
     envVars:
       - key: NODE_ENV
         value: production
+
+      # Add this manually in Render dashboard (DON'T hardcode)
       - key: GEMINI_API_KEY
         sync: false
