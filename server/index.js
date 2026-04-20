@@ -121,9 +121,11 @@ app.post("/api/interview", aiLimiter, async (req, res) => {
 
 const path = require("path");
 
-const buildPath = path.join(process.cwd(), "client/build");
-
 if (process.env.NODE_ENV === "production") {
+  const buildPath = path.join(process.cwd(), "client/build");
+
+  console.log("Serving static from:", buildPath);
+
   app.use(express.static(buildPath));
 
   app.get("*", (req, res) => {
